@@ -4,7 +4,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 // Pulls the latest code from your main branch
-                git 'https://github.com/Soham07-coder/python-jenkins-project.git'
+                git url: 'https://github.com/Soham07-coder/python-jenkins-project.git', branch: 'main'
             }
         }
         stage('Install Dependencies') {
