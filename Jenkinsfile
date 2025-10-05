@@ -11,7 +11,7 @@ pipeline {
             steps {
                 // For Windows agents in Jenkins: Install venv and dependencies
                 // Note: Jenkins will run these commands from the project directory.
-                bat 'python -m venv .venv'
+                bat '"C:\\Users\\soham\\AppData\\Local\\Programs\\\Python\\Python310\\python.exe"'
                 bat '.venv\\Scripts\\activate && pip install -r requirements.txt'
             }
         }
