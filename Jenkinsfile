@@ -17,12 +17,16 @@ pipeline {
         }
         stage('Run Application & Tests') {
             steps {
-                // 1. Run the Flask app in the background (start /b)
-                // 2. Wait 5 seconds for the app to start
-                // 3. Activate venv and run pytest
-                bat 'start /b cmd /c "flask --app app run --port=5001"'
-                bat 'timeout /t 5'
-                bat '.venv\\Scripts\\activate && pytest'
+                // 1. Activate venv AND start Flask in the background
+                // We use 'call' to run the activate script and keep the environment persistent.
+                bat 'start "flask_server" /B cmd /c "call .venv\\Scripts\\activate && flask --app app run --port=5001"'
+                
+                // 2. Use a simple 'ping' command as a robust alternative to 'timeout'
+                // Ping waits for 1+ seconds per ping. This waits ~5 seconds.
+                bat 'ping -n 6 127.0.0.1 > NUL'
+                
+                // 3. Activate venv AND run Pytest
+                bat 'call .venv\\Scripts\\activate && pytest'
             }
         }
     }
